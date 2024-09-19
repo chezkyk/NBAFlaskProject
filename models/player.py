@@ -17,3 +17,8 @@ class Player(db.Model):
 
     def __repr__(self):
         return f'<Player {self.playerName}>'
+
+    def do_dict(self):
+        return {"id" : self.id,"playerId": self.playerId, "playerName": self.playerName, "team": self.team, "position": self.position,
+                "season": self.season, "points": self.points, "games": self.games,"twoPercent": self.twoPercent,
+                "threePercent": self.threePercent, "atr": self.atr, "ppg_ratio": self.ppg_ratio}
