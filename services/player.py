@@ -69,5 +69,21 @@ def calc_ppg_ratio(points_per_game, avg_position):
     return points_per_game / avg_position
 
 
+def get_players_by_position(position, season):
+    query = db.session.query(Player) #return all players from db
+    if position:# check if their is a given position
+        query = query.filter(Player.position == position)# filter by position
+    if season:# check if their is a given season
+        query = query.filter(Player.season == season)# filter by season
+
+    players = query.all()# make query after filtering
+
+
+    if not players:# check if nothing came back from db after filter
+        return []
+
+    return [player.do_dict() for player in players] # return all players
+
+
 
 
