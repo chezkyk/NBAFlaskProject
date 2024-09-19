@@ -1,5 +1,5 @@
-from flask import Blueprint, jsonify
-from services.player import insert_seasons_data_in_db , update_ppg_ratios
+from flask import Blueprint, jsonify, request
+from services.player import insert_seasons_data_in_db , update_ppg_ratios ,get_players_by_position
 
 player_bp = Blueprint('player', __name__, url_prefix='/player')
 
@@ -17,3 +17,14 @@ def update_ppg():
     for season in seasons:
         update_ppg_ratios(season)
     return jsonify({"message": "ppg_ratios from player was updating successfully"}), 200
+@player_bp.route('/players', methods=['GET'])
+def get_player_by_position():
+    position = request.args.get('position')
+    season = request.args.get('season')
+    try:
+        players = get_players_by_position(position, season)
+        return jsonify(players), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
